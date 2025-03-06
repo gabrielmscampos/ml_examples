@@ -10,7 +10,9 @@ python = "^3.11"
 notebook = "^7.3.2"
 cmsdials = {extras = ["pandas", "tqdm"], version = "^1.7.0"}
 runregistry = "^3.1.1"
-numpy = "^2.2.3"
+numpy = "<2.2.0"
+tensorflow = "^2.18.0"
+matplotlib = "^3.10.1"
 
 
 [build-system]
