@@ -13,6 +13,7 @@ runregistry = "^3.1.1"
 numpy = "<2.2.0"
 tensorflow = "^2.18.0"
 matplotlib = "^3.10.1"
+torch = "^2.6.0"
 
 
 [build-system]
