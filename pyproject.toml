@@ -18,6 +18,8 @@ xgboost = "^2.1.4"
 scikit-learn = "^1.6.1"
 seaborn = "^0.13.2"
 lightgbm = "^4.6.0"
+onnx = "^1.17.0"
+tf2onnx = "^1.16.1"
 
 
 [build-system]
