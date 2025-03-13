@@ -77,7 +77,7 @@ curl http://localhost:8080/v2/models/my_model
 
 ## Test predictions
 
-Run the test predictions script to test if your model working correctly with Tensorflow Serving:
+Run the test predictions script to test if your model working correctly with MLServer:
 
 ```bash
 python test_predictions.py 360950
