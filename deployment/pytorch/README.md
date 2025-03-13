@@ -62,7 +62,7 @@ Optionally you can remove the `--foreground` flag to run torchserve in the backg
 
 ## Test predictions
 
-Run the test predictions script to test if your model working correctly with Tensorflow Serving:
+Run the test predictions script to test if your model working correctly with torchserver:
 
 ```bash
 python test_predictions.py 360950
