@@ -14,7 +14,7 @@ Using docker you can start serving a tensorflow model using the following comman
 docker run -it --rm \
     -p 8501:8501 \
     --name=tf_serving \
-    --mount type=bind,source=$(pwd)/models/tensorflow,target=/models/my_model \
+    --mount type=bind,source=$(pwd)/../../models/tensorflow,target=/models/my_model \
     -e MODEL_NAME=my_model \
     -t tensorflow/serving
 ```
