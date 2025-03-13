@@ -4,7 +4,6 @@ from my_model import Preprocessing, NMFRegressor
 from mlserver import MLModel
 from mlserver.utils import get_model_uri
 from mlserver.types import InferenceRequest, InferenceResponse, ResponseOutput
-import requests
 
 # When joblib tries to load our model it will look in the module name the was dumped
 # for custom objects needed by our model. Since our model was dumped from a jupyter notebook
