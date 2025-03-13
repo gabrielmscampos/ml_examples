@@ -191,3 +191,4 @@ models/
 deployment/pytorch/logs
 deployment/pytorch/model_store
 deployment/pytorch/key_file.json
+deployment/scikit_custom_regressor/my_model
