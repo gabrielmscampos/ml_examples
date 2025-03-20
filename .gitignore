@@ -194,3 +194,4 @@ deployment/pytorch/key_file.json
 deployment/scikit_custom_regressor/my_model
 deployment/xgboost_regressor/my_model
 deployment/lightgbm_regressor/my_model
+tmp_kube_configs
