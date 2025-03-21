@@ -22,3 +22,7 @@ Directory used to test the local deployment of models using `tf-serving`, `torch
 - [xgboost_regressor](./deployment/xgboost_regressor/): Deploys a xgboost model using `mlserver` and a custom inference implementation.
 - [lightgbm_regressor](./deployment/lightgbm_regressor/): Deploys a lightgbm model wrapped with scikit-learn's MultiOutputRegressor using `mlserver` and a custom inference implementation.
 - [sciki_custom_regressor](./deployment/scikit_custom_regressor/): Deploys a scikit-learn model using `mlserver` and a custom inference implementation.
+
+### KServe
+
+Local kserve deployment test is done using `minikube` to deploy a local k8s cluster. More info can be found [here](./deployment/kserve/).
