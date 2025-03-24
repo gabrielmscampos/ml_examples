@@ -102,7 +102,7 @@ function deploy_service_from_str() {
     _wait_for_pod_running "$namespace" "$service_name" 300
 }
 
-function _wait_for_inference_service() {
+function wait_for_inference_service() {
     echo "Wait for inference service to be ready"
     max_wait_time="$1"
     interval="$2"
@@ -124,11 +124,4 @@ function _wait_for_inference_service() {
         fi
         sleep "$interval"
     done
-}
-
-function make_isvc_accessible() {
-    namespace="$1"
-    service_name="$2"
-    _wait_for_inference_service 300 5 "$service_name" "$namespace"
-    echo "✓ Service is accessible"
 }
