@@ -28,7 +28,7 @@ sed -e "s/{{ inference_service_resource_name }}/$service_name/g" \
     $templates_path/tensorflow.yaml \
     > $tmp_kubeconfigs_path/tensorflow-isvc.yaml
 deploy_service "default" "$tmp_kubeconfigs_path/tensorflow-isvc.yaml" "$service_name"
-make_isvc_accessible "default" "$service_name"
+wait_for_inference_service 300 5 "$service_name" "default"
 
 # Test predictions
 istio_node_port=$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
