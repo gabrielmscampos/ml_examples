@@ -36628,5 +36628,13 @@
                 0.0
             ]
         }
+    ],
+    "outputs": [
+        {
+            "name": "reconstructed"
+        },
+        {
+            "name": "avg_mse"
+        }
     ]
 }
