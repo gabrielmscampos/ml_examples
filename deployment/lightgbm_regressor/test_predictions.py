@@ -56,8 +56,8 @@ if __name__ == "__main__":
 
     # Parse the output predictions
     outputs = predictions["outputs"]
-    reconstructed_data = next(filter(lambda x: x["name"] == "output-0", outputs), None)["data"]
-    avg_mse = next(filter(lambda x: x["name"] == "output-1", outputs), None)["data"]
+    output1 = next(filter(lambda x: x["name"] == "output-1", outputs), None)
+    avg_mse = np.array(output1["data"]).reshape(output1["shape"])
 
     # Plot
     avg_mse = np.array(avg_mse)
