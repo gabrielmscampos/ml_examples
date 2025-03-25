@@ -56,5 +56,11 @@ service_name="xgboost-example"
 namespace="default"
 url="${istio_base_url}/v2/models/${model_name}/infer"
 service_hostname=$(kubectl get inferenceservice ${service_name} --namespace "$namespace" -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+
+# Test without optional outputs
 input_path=@$inputs_path/oip_inputs.json
+curl -v -H "Host: ${service_hostname}" -H "Content-Type: application/json" $url -d $input_path
+
+# Test with optional outputs
+input_path=@$inputs_path/oip_inputs_outputs.json
 curl -v -H "Host: ${service_hostname}" -H "Content-Type: application/json" $url -d $input_path
