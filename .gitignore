@@ -188,9 +188,9 @@ pyrightconfig.json
 
 data/
 models/
-deployment/pytorch/logs
-deployment/pytorch/model_store
-deployment/pytorch/key_file.json
+deployment/torchserve/logs
+deployment/torchserve/model_store
+deployment/torchserve/key_file.json
 deployment/scikit_custom_regressor/my_model
 deployment/xgboost_regressor/my_model
 deployment/lightgbm_regressor/my_model

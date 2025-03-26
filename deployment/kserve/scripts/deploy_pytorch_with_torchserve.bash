@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+source ./utils.bash
+
 tmp_kubeconfigs_path="../tmp_kube_configs"
 mkdir -p $tmp_kubeconfigs_path
 
@@ -27,8 +29,8 @@ torch-model-archiver \
     --version 1.0 \
     --model-name my_model \
     --serialized-file ../../../models/torch/state_dict.pth \
-    --model-file ../../pytorch/my_model.py \
-    --handler ../../pytorch/my_handler_kserve.py \
+    --model-file ../../torchserve/my_model.py \
+    --handler ../../torchserve/my_handler_kserve.py \
     --export-path "$host_model_path/model-store" \
     --force
 
@@ -55,8 +57,6 @@ sed -e "s/{{ inference_service_resource_name }}/$service_name/g" \
     -e "s|{{ s3_model_root_path }}|$storage_uri|g" \
     $templates_path/torchserve.yaml \
     > $tmp_kubeconfigs_path/torchserve-isvc.yaml
-
-kubectl apply -f $tmp_kubeconfigs_path/torchserve-isvc.yaml
 
 deploy_service "default" "$tmp_kubeconfigs_path/torchserve-isvc.yaml" "$service_name"
 wait_for_inference_service 300 5 "$service_name" "default"
