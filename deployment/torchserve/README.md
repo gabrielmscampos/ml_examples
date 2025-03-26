@@ -76,5 +76,5 @@ If using `minikube` to deploy the lightgbm model using MLServer behind KServe, y
 python test_predictions.py \
   -r 360950 \
   -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v1/models/my_model:predict" \
-  -H "Host=$(kubectl get inferenceservice torchserve-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
+  -H "Host=$(kubectl get inferenceservice torchserve-v1-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
 ```
