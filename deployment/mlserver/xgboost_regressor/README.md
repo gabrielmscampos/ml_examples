@@ -43,7 +43,7 @@ For this example, you can run:
 
 ```bash
 mkdir -p my_model
-cp ../../models/xgb_regressor/0001.ubj my_model/0001.ubj
+cp ../../../models/xgb_regressor/0001.ubj my_model/0001.ubj
 cp ./my_handler.py my_model/my_handler.py
 cat >./my_model/model-settings.json <<EOL
 {
@@ -90,30 +90,5 @@ If using `minikube` to deploy the xgboost model using MLServer behind KServe, yo
 python test_predictions.py \
   -r 360950 \
   -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v2/models/my_model/infer" \
-  -H "Host=$(kubectl get inferenceservice xgboost-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
-```
-
-## Other material
-
-### Building xgbserver with docker
-
-Since `xgbserver` depends on `kserve[storage]` which depends on `protobuf (^4.25.4)`, installing `xgbserver` using pip or poetry in this project will lead to dependency incompatiblity. Since, this project depends on `tf2onnx (1.16.1)` (for testing tensorflow expert to ONNX) which depends on `protobuf (>=3.20,<4.0)`. Therefore, the easiest way to test locally is to build the xgbserver using docker.
-
-```bash
-git clone https://github.com/kserve/kserve
-cd kserve/python/
-docker build -t xgbserver -f xgb.Dockerfile .
-```
-
-### Serving with xgbserver
-
-Be sure that your model doesn't need any custom dependencies, otherwise you'll have to modify the sklearn.Dockerfile and build a custom image for you model.
-
-```bash
-docker run -it --rm \
-    -p 8080:8080 \
-    --name=xgbserver \
-    --mount type=bind,source=$(pwd)/../../models/xgb_regressor,target=/models/my_model \
-    xgbserver \
-    python -m xgbserver --model_dir=/models/my_model --model_name=my_model
+  -H "Host=$(kubectl get inferenceservice xgboost-v2-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
 ```
