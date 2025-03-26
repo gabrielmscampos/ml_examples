@@ -16,7 +16,7 @@ For this example, you can run:
 
 ```bash
 mkdir -p my_model
-cp ../../models/lightgbm_regressor/model.joblib my_model/model.joblib
+cp ../../../models/lightgbm_regressor/model.joblib my_model/model.joblib
 cp ./my_handler.py my_model/my_handler.py
 cat >./my_model/model-settings.json <<EOL
 {
@@ -63,5 +63,5 @@ If using `minikube` to deploy the lightgbm model using MLServer behind KServe, y
 python test_predictions.py \
   -r 360950 \
   -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v2/models/my_model/infer" \
-  -H "Host=$(kubectl get inferenceservice lightgbm-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
+  -H "Host=$(kubectl get inferenceservice lightgbm-v2-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
 ```
