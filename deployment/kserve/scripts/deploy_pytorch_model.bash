@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-source ./utils.bash
-
 tmp_kubeconfigs_path="../tmp_kube_configs"
 mkdir -p $tmp_kubeconfigs_path
 
@@ -17,10 +15,10 @@ minio_api_node_port=$(kubectl get svc minio-service --namespace minio -o jsonpat
 minio_external_api_url="http://$minikube_ip:$minio_api_node_port"
 
 # Deploy model and make it accessible
-service_name="pytorch-example-v2"
-s3_model_dir="s3://test-bucket/pytorch-example-v2"
-storage_uri="\"s3://test-bucket/pytorch-example-v2\""
-host_model_path="$tmp_kubeconfigs_path/pytorch-example-v2"
+service_name="torchserve-example"
+s3_model_dir="s3://test-bucket/torchserve-example"
+storage_uri="\"s3://test-bucket/torchserve-example\""
+host_model_path="$tmp_kubeconfigs_path/torchserve-example"
 
 mkdir -p "$host_model_path/model-store"
 mkdir -p "$host_model_path/config"
@@ -30,7 +28,7 @@ torch-model-archiver \
     --model-name my_model \
     --serialized-file ../../../models/torch/state_dict.pth \
     --model-file ../../pytorch/my_model.py \
-    --handler ../../pytorch/my_handler_v2.py \
+    --handler ../../pytorch/my_handler_kserve.py \
     --export-path "$host_model_path/model-store" \
     --force
 
@@ -56,18 +54,20 @@ sed -e "s/{{ inference_service_resource_name }}/$service_name/g" \
     -e "s/{{ service_account_resource_name }}/$service_account_resource_name/g" \
     -e "s|{{ s3_model_root_path }}|$storage_uri|g" \
     $templates_path/torchserve.yaml \
-    > $tmp_kubeconfigs_path/torchserve-v2-isvc.yaml
+    > $tmp_kubeconfigs_path/torchserve-isvc.yaml
 
-deploy_service "default" "$tmp_kubeconfigs_path/torchserve-v2-isvc.yaml" "$service_name"
+kubectl apply -f $tmp_kubeconfigs_path/torchserve-isvc.yaml
+
+deploy_service "default" "$tmp_kubeconfigs_path/torchserve-isvc.yaml" "$service_name"
 wait_for_inference_service 300 5 "$service_name" "default"
 
 # Test predictions
 istio_node_port=$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
 istio_base_url="http://$minikube_ip:$istio_node_port"
 model_name="my_model"
-service_name="pytorch-example-v2"
+service_name="torchserve-example"
 namespace="default"
-url="${istio_base_url}/v2/models/${model_name}/infer"
+url="${istio_base_url}/v1/models/${model_name}:predict"
 service_hostname=$(kubectl get inferenceservice ${service_name} --namespace "$namespace" -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-input_path=@$inputs_path/oip_inputs.json
+input_path=@$inputs_path/torchserve_inputs.json
 curl -v -H "Host: ${service_hostname}" -H "Content-Type: application/json" $url -d $input_path

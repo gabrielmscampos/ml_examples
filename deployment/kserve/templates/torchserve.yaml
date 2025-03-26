@@ -10,5 +10,5 @@ spec:
     model:
       modelFormat:
         name: pytorch
-      protocolVersion: v2
+      runtime: kserve-torchserve
       storageUri: {{ s3_model_root_path }}
