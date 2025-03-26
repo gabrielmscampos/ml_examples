@@ -17,7 +17,7 @@ Collection of notebooks implementing different ML models using CMS DQM per-LS da
 
 Directory used to test the local deployment of models using `tf-serving`, `torchserver` and `mlserver`. This is used as a test case to understand how KServe is deploying models under the hood and a way to validate if the model works with the underlying serving framework before deploying it.
 
-- [tensorflow](./deployment/tensorflow/): Deploys a tensorflow model using `tf-serving`.
+- [tfserving](./deployment/tfserving/): Deploys a tensorflow model using `tf-serving`.
 - [pytorch](./deployment/pytorch/): Deploys a pytorch model using `torchserve` and a custom inference handler.
 - [xgboost_regressor](./deployment/xgboost_regressor/): Deploys a xgboost model using `mlserver` and a custom inference implementation.
 - [lightgbm_regressor](./deployment/lightgbm_regressor/): Deploys a lightgbm model wrapped with scikit-learn's MultiOutputRegressor using `mlserver` and a custom inference implementation.
