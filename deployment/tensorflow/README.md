@@ -24,5 +24,16 @@ docker run -it --rm \
 Run the test predictions script to test if your model working correctly with Tensorflow Serving:
 
 ```bash
-python test_predictions.py 360950
+python test_predictions.py -r 360950
+```
+
+## Test predictions on a different server
+
+If using `minikube` to deploy the lightgbm model using MLServer behind KServe, you can use the same script to test predictions:
+
+```bash
+python test_predictions.py \
+  -r 360950 \
+  -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v1/models/tensorflow-example:predict" \
+  -H "Host=$(kubectl get inferenceservice tensorflow-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
 ```
