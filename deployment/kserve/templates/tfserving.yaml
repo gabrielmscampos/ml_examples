@@ -10,4 +10,5 @@ spec:
     model:
       modelFormat:
         name: tensorflow
+      runtime: kserve-tensorflow-serving
       storageUri: {{ s3_model_root_path }}

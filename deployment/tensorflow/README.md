@@ -34,6 +34,6 @@ If using `minikube` to deploy the lightgbm model using MLServer behind KServe, y
 ```bash
 python test_predictions.py \
   -r 360950 \
-  -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v1/models/tensorflow-example:predict" \
-  -H "Host=$(kubectl get inferenceservice tensorflow-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
+  -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v1/models/tfserving-example:predict" \
+  -H "Host=$(kubectl get inferenceservice tfserving-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
 ```
