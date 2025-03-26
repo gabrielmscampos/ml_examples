@@ -1846,8 +1846,8 @@ files = [
 
 [package.dependencies]
 numpy = [
-    {version = ">=1.23.3", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
     {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.3", markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
 ]
 
 [package.extras]
@@ -2294,6 +2294,24 @@ protobuf = ">=3.20.2"
 reference = ["Pillow", "google-re2"]
 
 [[package]]
+name = "onnxscript"
+version = "0.2.2"
+description = "Naturally author ONNX functions and models using a subset of Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "onnxscript-0.2.2-py3-none-any.whl", hash = "sha256:fac509771075537042b81ff31579abe9e91cd0ccbd3eefed655e52fcf0254cc6"},
+    {file = "onnxscript-0.2.2.tar.gz", hash = "sha256:bc615a87757471b269774f0d4b9a61d6b0d601b40cf86a1e368fba2891dec5d4"},
+]
+
+[package.dependencies]
+ml_dtypes = "*"
+numpy = "*"
+onnx = ">=1.16"
+packaging = "*"
+typing_extensions = ">=4.10"
+
+[[package]]
 name = "opt-einsum"
 version = "3.4.0"
 description = "Path optimization of einsum functions."
@@ -2482,8 +2500,8 @@ files = [
 
 [package.dependencies]
 numpy = [
-    {version = ">=1.23.2", markers = "python_version == \"3.11\""},
     {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
+    {version = ">=1.23.2", markers = "python_version == \"3.11\""},
 ]
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
@@ -4311,4 +4329,4 @@ scikit-learn = ["scikit-learn"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "4d467e623d8f8c5ee9ef7bd238242b6a351eea89a7fc201ec602a3c96b1b72ad"
+content-hash = "aa7fc372738d9f84e9876818a56c02f1adf6aa443edc3636036649e4f1d11154"
