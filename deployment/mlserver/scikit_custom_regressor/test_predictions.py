@@ -39,8 +39,8 @@ if __name__ == "__main__":
     if args.headers:
         args.headers = dict(header.split("=", 1) for header in args.headers)
 
-    data_arr = np.load("../../data/data_unfiltered.npy")
-    run_arr = np.load("../../data/runs_unfiltered.npy")
+    data_arr = np.load("../../../data/data_unfiltered.npy")
+    run_arr = np.load("../../../data/runs_unfiltered.npy")
     unique_runs = np.unique(run_arr)
 
     if args.run_number not in unique_runs:

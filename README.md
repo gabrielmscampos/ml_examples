@@ -21,7 +21,7 @@ Directory used to test the local deployment of models using `tf-serving`, `torch
 - [torchserve](./deployment/torchserve/): Deploys a pytorch model using `torchserve` and a custom inference handler.
 - [mlserver/xgboost_regressor](./deployment/mlserver/xgboost_regressor/): Deploys a xgboost model using `mlserver` and a custom inference implementation.
 - [mlserver/lightgbm_regressor](./deployment/mlserver/lightgbm_regressor/): Deploys a lightgbm model wrapped with scikit-learn's MultiOutputRegressor using `mlserver` and a custom inference implementation.
-- [sciki_custom_regressor](./deployment/scikit_custom_regressor/): Deploys a scikit-learn model using `mlserver` and a custom inference implementation.
+- [mlserver/sciki_custom_regressor](./deployment/mlserver/scikit_custom_regressor/): Deploys a scikit-learn model using `mlserver` and a custom inference implementation.
 
 ### KServe
 

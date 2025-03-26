@@ -191,7 +191,7 @@ models/
 deployment/torchserve/logs
 deployment/torchserve/model_store
 deployment/torchserve/key_file.json
-deployment/scikit_custom_regressor/my_model
+deployment/mlserver/scikit_custom_regressor/my_model
 deployment/mlserver/xgboost_regressor/my_model
 deployment/mlserver/lightgbm_regressor/my_model
 tmp_kube_configs

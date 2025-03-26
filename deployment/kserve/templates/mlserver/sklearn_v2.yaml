@@ -8,6 +8,7 @@ spec:
   predictor:
     serviceAccountName: {{ service_account_resource_name }}
     model:
+      protocolVersion: v2
       modelFormat:
         name: sklearn
       runtime: kserve-mlserver
