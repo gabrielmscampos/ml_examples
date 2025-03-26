@@ -4,8 +4,6 @@
 #
 # minikube dashboard
 
-set -euo pipefail
-
 function start_minikube_cluster() {
     profile_name="$1"
     echo "Checking if Minikube profile '$profile_name' exists..."
