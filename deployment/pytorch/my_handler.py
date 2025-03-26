@@ -1,5 +1,4 @@
 import logging
-import json
 
 import torch
 from my_model import InferenceAutoencoder
@@ -25,11 +24,11 @@ class InferenceAutoencoderHandler(BaseHandler):
         self.model = InferenceAutoencoder(input_shape=(51,), l2_lambda=1e-4)
         self.model.load_state_dict(state_dict)
         self.model.eval()
-        logger.info("✅ Model Loaded Successfully!")
 
     def preprocess(self, data):
         """Convert input data to tensor"""
-        input_data = torch.tensor(data[0]['body'], dtype=torch.float32)
+        input_data = data[0].get("data") or data[0].get("body")
+        input_data = torch.tensor(input_data.get("instances"), dtype=torch.float32)
         return input_data
 
     def inference(self, data):
@@ -41,8 +40,9 @@ class InferenceAutoencoderHandler(BaseHandler):
     def postprocess(self, data):
         """Convert output to JSON format"""
         # We have to return the same length as the input:
-        # If our input is: [[1,2,3], [1,2,3]]
-        # Ou output has to be [list|str|int|float, list|str|int|float]
+        # If our input is: [[1,2,3], [1,2,3], ...]
+        # Our output has to be [list|str|int|float, list|str|int|float, ...]
+        # This way, the webser will but the payload directly on the response body
         reconstructed, avg_mse = data
         payload = []
         for idx in range(len(avg_mse)):

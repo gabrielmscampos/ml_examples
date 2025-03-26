@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 def inference_over_http(data: np.array):
     url = "http://localhost:8080/predictions/my_model"
     headers = {"Content-Type": "application/json"}
-    response = requests.post(url, headers=headers, json=data.tolist())
+    body = {"instances": data.tolist()}
+    response = requests.post(url, headers=headers, json=body)
     response.raise_for_status()
     return response.json()
 
