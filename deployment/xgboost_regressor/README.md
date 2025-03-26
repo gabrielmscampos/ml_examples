@@ -79,7 +79,18 @@ curl http://localhost:8080/v2/models/my_model
 Run the test predictions script to test if your model working correctly with MLServer:
 
 ```bash
-python test_predictions.py 360950
+python test_predictions.py -r 360950
+```
+
+## Test predictions on a different server
+
+If using `minikube` to deploy the xgboost model using MLServer behind KServe, you can use the same script to test predictions:
+
+```bash
+python test_predictions.py \
+  -r 360950 \
+  -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v2/models/my_model/infer" \
+  -H "Host=$(kubectl get inferenceservice xgboost-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
 ```
 
 ## Other material
