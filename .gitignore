@@ -196,4 +196,5 @@ deployment/mlserver/xgboost_regressor/my_model
 deployment/mlserver/lightgbm_regressor/my_model
 deployment/tritonserver/onnx/tensorflow/model-repository
 deployment/tritonserver/onnx/pytorch/model-repository
+deployment/tritonserver/tensorflow/model-repository
 tmp_kube_configs
