@@ -23,6 +23,7 @@ tf2onnx = "^1.16.1"
 torchserve = "^0.12.0"
 torch-model-archiver = "^0.12.0"
 onnxscript = "^0.2.2"
+onnxruntime = "^1.21.0"
 
 
 [build-system]
