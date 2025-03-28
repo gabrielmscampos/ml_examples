@@ -9,3 +9,7 @@ source ./deploy_pytorch_with_torchserve.bash
 source ./deploy_xgboost_with_mlserver.bash
 source ./deploy_lightgbm_with_mlserver.bash
 source ./deploy_scikit_with_mlserver.bash
+source ./deploy_onnx_pytorch_with_tritonserver.bash
+source ./deploy_onnx_tensorflow_with_tritonserver.bash
+source ./deploy_tensorflow_with_tritonserver.bash
+source ./deploy_torchscript_with_tritonserver.bash
