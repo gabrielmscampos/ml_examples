@@ -14,7 +14,7 @@ For this example, you can run:
 
 ```bash
 mkdir -p model-repository/my_model/1
-cp ../../../../models/torch_as_onnx/model.onnx model-repository/my_model/1/model.onnx
+cp ../../../../models/torch_as_onnx_ops21/model.onnx model-repository/my_model/1/model.onnx
 cat >./model-repository/my_model/config.pbtxt <<EOL
 name: "my_model"
 platform: "onnxruntime_onnx"
@@ -64,8 +64,25 @@ curl http://localhost:8000/v2/models/my_model
 
 ## Test predictions
 
-Run the test predictions script to test if your model working correctly with MLServer:
+Run the test predictions script to test if your model working correctly with tritonserver:
 
 ```bash
 python test_predictions.py -r 360950
+```
+
+## Test predictions on a different server
+
+If using `minikube` to deploy the pytorch model using tritonserver behind KServe, you can use the same script to test predictions:
+
+```bash
+python test_predictions.py \
+  -r 360950 \
+  -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v2/models/my_model/infer" \
+  -H "Host=$(kubectl get inferenceservice onnx-pytorch-tritonserver-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
+```
+
+Note that, the tritonserver version might not support the ONNX model opset or IR version. If this happens you may need to re-export the model. For example, KServe v0.15.0-rc1 is using NVIDIA tritonserver 2.34.0, wich only supports ONNX IR version up to 9, so we have to package our model with a compatible ONNX model. In this case:
+
+```bash
+cp ../../../../models/torch_as_onnx_ops20/model.onnx model-repository/my_model/1/model.onnx
 ```
