@@ -59,8 +59,12 @@ sed -e "s/{{ inference_service_resource_name }}/$service_name/g" \
     $templates_path/tritonserver/tensorflow.yaml \
     > $tmp_kubeconfigs_path/tensorflow-tritonserver-example-isvc.yaml
 
-deploy_service "default" "$tmp_kubeconfigs_path/tensorflow-tritonserver-example-isvc.yaml" "$service_name"
-wait_for_inference_service 300 5 "$service_name" "default"
+kube_api_url=https://$minikube_ip:8443
+cacert=~/.minikube/ca.crt
+cert=~/.minikube/profiles/kserve-test/client.crt
+key=~/.minikube/profiles/kserve-test/client.key
+deploy_inferenceservice_http $kube_api_url $cacert $cert $key "default" "$tmp_kubeconfigs_path/tensorflow-tritonserver-example-isvc.yaml" "$service_name"
+wait_for_inference_service_http $kube_api_url $cacert $cert $key 300 5 "$service_name" "default"
 
 # Test predictions
 istio_node_port=$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
