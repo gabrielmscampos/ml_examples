@@ -24,7 +24,6 @@ def inference_over_http(data: np.array, url: str | None = None, headers: dict | 
         ]
     }
     response = requests.post(url, headers=headers, json=body)
-    print(response.text)
     response.raise_for_status()
     return response.json()
 
