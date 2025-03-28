@@ -69,3 +69,14 @@ Run the test predictions script to test if your model working correctly with tri
 ```bash
 python test_predictions.py -r 360950
 ```
+
+## Test predictions on a different server
+
+If using `minikube` to deploy the pytorch model using tritonserver behind KServe, you can use the same script to test predictions:
+
+```bash
+python test_predictions.py \
+  -r 360950 \
+  -u "http://$(minikube ip):$(kubectl get svc istio-ingressgateway --namespace istio-system -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')/v2/models/my_model/infer" \
+  -H "Host=$(kubectl get inferenceservice torchscript-tritonserver-example --namespace default -o jsonpath='{.status.url}' | cut -d "/" -f 3)"
+```
