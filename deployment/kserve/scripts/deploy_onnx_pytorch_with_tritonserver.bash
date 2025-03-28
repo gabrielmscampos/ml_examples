@@ -86,3 +86,18 @@ temp_file=$(mktemp)
 jq '.inputs[].name |= sub("input-0"; "input_0")' $inputs_path/oip_inputs_outputs.json > $temp_file
 curl -v -H "Host: ${service_hostname}" -H "Content-Type: application/json" $url -d @$temp_file
 rm $temp_file
+
+# Clean inference service after testing
+DELETE_AFTER_TESTING=true
+if [ $# -gt 0 ]; then
+    if [ "$1" == "false" ]; then
+        DELETE_AFTER_TESTING=false
+    fi
+fi
+
+if [ "$DELETE_AFTER_TESTING" == "true" ]; then
+  echo "Deleting inference service..."
+  kubectl delete -f $tmp_kubeconfigs_path/onnx-pytorch-tritonserver-example-isvc.yaml
+else
+  echo "Skipping inference service deletion."
+fi

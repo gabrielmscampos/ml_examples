@@ -45,3 +45,18 @@ url="${istio_base_url}/v1/models/${model_name}:predict"
 service_hostname=$(kubectl get inferenceservice ${service_name} --namespace "$namespace" -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 input_path=@$inputs_path/tfserving_inputs.json
 curl -v -H "Host: ${service_hostname}" -H "Content-Type: application/json" $url -d $input_path
+
+# Clean inference service after testing
+DELETE_AFTER_TESTING=true
+if [ $# -gt 0 ]; then
+    if [ "$1" == "false" ]; then
+        DELETE_AFTER_TESTING=false
+    fi
+fi
+
+if [ "$DELETE_AFTER_TESTING" == "true" ]; then
+  echo "Deleting inference service..."
+  kubectl delete -f $tmp_kubeconfigs_path/tfserving-v1-isvc.yaml
+else
+  echo "Skipping inference service deletion."
+fi

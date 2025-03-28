@@ -68,3 +68,18 @@ curl -v -H "Host: ${service_hostname}" -H "Content-Type: application/json" $url 
 # Test with optional outputs
 input_path=@$inputs_path/oip_inputs_outputs.json
 curl -v -H "Host: ${service_hostname}" -H "Content-Type: application/json" $url -d $input_path
+
+# Clean inference service after testing
+DELETE_AFTER_TESTING=true
+if [ $# -gt 0 ]; then
+    if [ "$1" == "false" ]; then
+        DELETE_AFTER_TESTING=false
+    fi
+fi
+
+if [ "$DELETE_AFTER_TESTING" == "true" ]; then
+  echo "Deleting inference service..."
+  kubectl delete -f $tmp_kubeconfigs_path/lightgbm-v2-isvc.yaml
+else
+  echo "Skipping inference service deletion."
+fi
