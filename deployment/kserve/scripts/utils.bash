@@ -13,8 +13,6 @@ function start_minikube_cluster() {
     fi
     echo "Starting new Minikube cluster with profile '$profile_name'"
     minikube start -p "$profile_name"
-    echo "Installing metrics-server addon"
-    minikube addons enable metrics-server -p "$profile_name"
     echo "Activating profile $profile_name"
     minikube profile $profile_name
 }
